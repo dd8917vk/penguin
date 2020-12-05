@@ -9,19 +9,19 @@ current_path = os.getcwd()
 man_page_array = []
 regex = r'index[\d].html'
 all_matches = []
-#for comparing commands against commands in man_page_array obj
+
 
 def get_data(directory):
     index_list = []
     for root, dirs, files in os.walk(directory):
-        for file in sorted(files):
+        for file in files:
             #print(file)
             html_file_path = root+os.sep+file
             if html_file_path.endswith(".html"):
                 #parser(html_file_path)
                 splitted = html_file_path.split(os.sep)
                 try:
-                    file_name = splitted[6].split('.')
+                    file_name = splitted[7].split('.')
                     command = file_name[0]
                     parser(html_file_path, command)
                 except IndexError:
@@ -39,13 +39,6 @@ def get_links(index_file):
     except IsADirectoryError:
         pass
 
-# def scrape_links(file):
-#     with open(file, 'r') as f:
-#         contents = f.read()
-#         soup = BeautifulSoup(contents, 'lxml')#'html.parser')
-#         all_matches.append(soup.find_all('a', class_='link'))
-    
-        #matches = [a.get_text() for a in match]
 
 def parser(file, command):
     #not a dash, some other character..
@@ -53,29 +46,30 @@ def parser(file, command):
     with open(file, 'r') as f:
         contents = f.read()
         soup = BeautifulSoup(contents, 'lxml')#'html.parser')
+        body = soup.body
         match = soup.find('div', class_='refnamediv')
         if match != None:
             matched = match.p.text
             matched = matched.split(not_dash)
-
             if len(matched[1]) > 0:
-                man_page_objects = {"command": command.strip(), "description": matched[1].strip(), "link": ''}
+                man_page_objects = {"command": command.strip(), "description": matched[1].strip(), "link": '', "html": str(body)}
                 man_page_array.append(man_page_objects)
 
 
 get_data(current_path)
-#print(man_page_array)
 get_links(current_path)
 
 #flatten all_matches array
-links_arr = []
-for i in range(len(all_matches)):
-    for j in range(len(all_matches[i])):
-        links_arr.append(all_matches[i][j])
+def flatten_links():
+    links_arr = []
+    for i in range(len(all_matches)):
+        for j in range(len(all_matches[i])):
+            links_arr.append(all_matches[i][j])
+    return links_arr
 
 
 #print('\n'.join(str(item) for item in links_arr))
-def compare():
+def compare(links_arr):
     for link in links_arr:
         cmd = link.attrs.get('href').split('.')[0].split('/')[1]
         for obj in man_page_array:
@@ -83,10 +77,11 @@ def compare():
                 obj["link"] = str(link)
             
 
-            # if obj["command"] in str(link):
-            #     search = re.findall(obj["command"], str(link))
-            #     if (search):
-            #         obj["link"] = str(link)
-compare()
-import pdb;pdb.set_trace()
-#htmlman1
+compare(flatten_links())
+
+def dump_json(man_page_array):
+    with open('master_data.json', 'w') as json_file:
+        json.dump(man_page_array, json_file, indent=2)
+
+dump_json(man_page_array)
+#import pdb;pdb.set_trace()

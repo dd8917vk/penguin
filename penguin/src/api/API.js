@@ -1,0 +1,17 @@
+const getData= async ()=>{
+    const response = await fetch('data.json');
+    const data = await response.json();
+    return data;
+}
+const getHtmlData= async ()=>{
+    const response = await fetch('master_data.json');
+    const data = await response.json();
+    return data;
+}
+// const getAsciiArt = async (text) = {
+//   const response = await fetch(`https://artii.herokuapp.com/make?text=linux+rules`)
+// }
+export {
+  getData,
+  getHtmlData
+}

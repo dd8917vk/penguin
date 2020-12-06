@@ -42,6 +42,10 @@ def get_links(index_file):
 
 def parser(file, command):
     #not a dash, some other character..
+    if len(command) > 20:
+        s1 = command[::2]
+        s2 = command[1::2]
+        command = s1+'\n'+s2
     not_dash = '—'
     with open(file, 'r') as f:
         contents = f.read()
@@ -52,7 +56,7 @@ def parser(file, command):
             matched = match.p.text
             matched = matched.split(not_dash)
             if len(matched[1]) > 0:
-                man_page_objects = {"command": command.strip(), "description": matched[1].strip(), "link": '', "html": str(body)}
+                man_page_objects = {"command": command.strip(), "description": matched[1].strip(), "link": ''}#str(body)}
                 man_page_array.append(man_page_objects)
 
 
@@ -80,7 +84,7 @@ def compare(links_arr):
 compare(flatten_links())
 
 def dump_json(man_page_array):
-    with open('master_data.json', 'w') as json_file:
+    with open('data.json', 'w') as json_file:
         json.dump(man_page_array, json_file, indent=2)
 
 dump_json(man_page_array)

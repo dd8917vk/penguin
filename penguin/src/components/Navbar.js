@@ -1,15 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useParams } from 'react'
 import styles from './Navbar.module.css'
 import { Link } from 'react-router-dom';
+import { atom, useRecoilState } from 'recoil'
+import { createHtmlDataState } from '../globalstate/atom';
+
+
 function Navbar() {
 
     const [loggedIn, setLoggedIn] = useState(false)
-    console.log(loggedIn)
+    const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
     return (
         <>
         <div className={styles.navbar}>
             <a href="https://www.kernel.org/doc/man-pages/">Official</a>
-            <Link to="/manpage/command">
+            <Link to={`/manpage/${htmlData[0]?.command}`}>
                 <p>About</p>
             </Link>
             <Link to="/favorites">

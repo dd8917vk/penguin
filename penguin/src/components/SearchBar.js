@@ -27,13 +27,10 @@ export default function SearchData(props) {
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
     const [searchText, setSearchText] = useState('')
-    const [htmlData, setHtmlData] = useState([])
+    //const [htmlData, setHtmlData] = useState([])
     
-    const [test, setTest] = useRecoilState(createHtmlDataState)
-    console.log(test)
+    const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
     
-    console.log(htmlData[0])
-
     const handleSearch = (event) => {
         setSearchText(event.target.value.toLowerCase()); 
         if (searchText !== ""){
@@ -44,12 +41,17 @@ export default function SearchData(props) {
         }
     }
     useEffect(async ()=>{
-        const result = await getData()
-        setData(result)
-        setFilteredData([])
-        const htmlResult = await getHtmlData()
-        setHtmlData(htmlResult)
-        setTest([1,2,3])
+        let isMounted = true;
+        if(isMounted){
+            const result = await getData()
+            setData(result)
+            setFilteredData([])
+            const htmlResult = await getHtmlData()
+            setHtmlData(htmlResult)
+        }
+        return function cleanup(){
+            isMounted = false;
+        }
       },[])
 
     return (

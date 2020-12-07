@@ -3,10 +3,12 @@ import { getHtmlData } from '../api/API'
 import { atom, useRecoilState } from 'recoil'
 import { createHtmlDataState } from '../globalstate/atom'
 import Navbar from '../components/Navbar'
-const ManualPage = () => {
 
-const [test, setTest] = useRecoilState(createHtmlDataState)
-console.log(test)
+
+const ManualPage = ({ match }) => {
+    console.log('match', match)
+
+const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
 
 
     return (

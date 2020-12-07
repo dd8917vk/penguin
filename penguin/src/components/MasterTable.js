@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, Container, Row } from 'react-bootstrap';
 import styles from './MasterTable.module.css'
+import { Link } from 'react-router-dom'
 
 const MasterTable = (props) => {
   const ascify = async (event) => {
@@ -25,7 +26,7 @@ const MasterTable = (props) => {
       {props.rows?.map((item, index)=> (
         <tr key={index}>
             <td style={{cursor: "pointer"}}onClick={ascify}>ascify</td>
-            <td>{item?.command}</td>
+            <td><Link to={`/manpage/${item?.command}`}>{item?.command}</Link></td>
             <td>{item?.description}</td>
             <td>favorites</td>
         </tr>

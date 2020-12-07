@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { getData, getHtmlData } from '../api/API'
 import MasterTable from './MasterTable'
 import Stats from './Stats'
+import { atom, useRecoilState } from 'recoil'
+import { createHtmlDataState } from '../globalstate/atom'
 
 const SearchBar = styled.input`
     display:block;
@@ -25,7 +27,13 @@ export default function SearchData(props) {
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
     const [searchText, setSearchText] = useState('')
+    const [htmlData, setHtmlData] = useState([])
     
+    const [test, setTest] = useRecoilState(createHtmlDataState)
+    console.log(test)
+    
+    console.log(htmlData[0])
+
     const handleSearch = (event) => {
         setSearchText(event.target.value.toLowerCase()); 
         if (searchText !== ""){
@@ -39,8 +47,9 @@ export default function SearchData(props) {
         const result = await getData()
         setData(result)
         setFilteredData([])
-        console.log('use effect ran')
-        //getHtmlData()
+        const htmlResult = await getHtmlData()
+        setHtmlData(htmlResult)
+        setTest([1,2,3])
       },[])
 
     return (

@@ -1,8 +1,10 @@
-import React, { Component, useParams } from 'react';
+import React, { Component, useParams, useEffect } from 'react';
 import Navbar from '../components/Navbar'
 import SearchData from '../components/SearchBar'   
 import Hr from '../components/Hr'
-
+import { RecoilRoot, useRecoilState } from 'recoil';
+import { createHtmlDataState } from '../globalstate/atom'
+import { getHtmlData } from '../api/API'
 
 import {
   BrowserRouter as Router,
@@ -11,9 +13,8 @@ import {
   Link
 } from "react-router-dom";
 
-
-
 const Home = () => {
+
     return (
         <div>
             <Hr />

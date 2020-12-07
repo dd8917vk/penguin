@@ -52,13 +52,19 @@ def parser(file, command):
         soup = BeautifulSoup(contents, 'lxml')#'html.parser')
         body = soup.body
         match = soup.find('div', class_='refnamediv')
+        soup_remove_attr = remove_attrs(body)
         if match != None:
             matched = match.p.text
             matched = matched.split(not_dash)
             if len(matched[1]) > 0:
-                man_page_objects = {"command": command.strip(), "description": matched[1].strip(), "link": ''}#str(body)}
+                man_page_objects = {"command": command.strip(), "description": matched[1].strip(), "link": '', "html": str(soup_remove_attr)}
                 man_page_array.append(man_page_objects)
 
+def remove_attrs(soup):
+    tag_list = soup.findAll(lambda tag: len(tag.attrs) > 0)
+    for t in tag_list:
+        t.attrs = {}
+    return soup
 
 get_data(current_path)
 get_links(current_path)
@@ -84,7 +90,7 @@ def compare(links_arr):
 compare(flatten_links())
 
 def dump_json(man_page_array):
-    with open('data.json', 'w') as json_file:
+    with open('cleaned_data.json', 'w') as json_file:
         json.dump(man_page_array, json_file, indent=2)
 
 dump_json(man_page_array)

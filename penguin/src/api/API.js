@@ -4,7 +4,7 @@ const getData= async ()=>{
     return data;
 }
 const getHtmlData= async ()=>{
-    const response = await fetch('master_data.json');
+    const response = await fetch('cleaned_data.json');
     const data = await response.json();
     return data;
 }

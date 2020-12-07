@@ -6895,6 +6895,41 @@
     "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
   },
   {
+    "command": ".",
+    "description": "im ur current directory, maaaaaan.",
+    "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
+  },
+  {
+    "command": "grep",
+    "description": "cmon, go look it up, maaaaaan.",
+    "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
+  },
+  {
+    "command": "..",
+    "description": "go back one directory, maaaan.",
+    "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
+  },
+  {
+    "command": "cd",
+    "description": "does cd really need to be in here? i think not...",
+    "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
+  },
+  {
+    "command": "sudo",
+    "description": "i always learned it as super user do....",
+    "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
+  },
+  {
+    "command": "root",
+    "description": "some would call me napoleon bonoparte",
+    "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
+  },
+  {
+    "command": "ps",
+    "description": "well dont u want to know about processes? goggle it.",
+    "link": "<a class=\"link\" href=\"htmlman1/shuf.1.html\" target=\"_top\">shuf(1)</a>"
+  },
+  {
     "command": "pcre2grep",
     "description": "a grep with Perl-compatible regular\n      expressions.",
     "link": "<a class=\"link\" href=\"htmlman1/pcre2grep.1.html\" target=\"_top\">pcre2grep(1)</a>"

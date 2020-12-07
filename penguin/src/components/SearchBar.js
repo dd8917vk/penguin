@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import React, { useState, useEffect } from 'react'
 import { getData, getHtmlData } from '../api/API'
 import MasterTable from './MasterTable'
+import Stats from './Stats'
 
 const SearchBar = styled.input`
     display:block;
@@ -29,15 +30,15 @@ export default function SearchData(props) {
         setSearchText(event.target.value.toLowerCase()); 
         if (searchText !== ""){
             setFilteredData(data.filter(item=>{
-                const lc = item.command.toLowerCase();
-                return lc.includes(searchText);
-            }))
-        } 
+                const command = item.command.toLowerCase();
+                return command.includes(searchText);
+            }).sort((a,b)=>a.command.length-b.command.length))
+        }
     }
     useEffect(async ()=>{
         const result = await getData()
         setData(result)
-        setFilteredData(result)
+        setFilteredData([])
         console.log('use effect ran')
         //getHtmlData()
       },[])
@@ -45,8 +46,9 @@ export default function SearchData(props) {
     return (
     <div>
     <form className="inputPlain">
-        <SearchBar onChange={(event) => handleSearch(event)}/>
-        <MasterTable rows={filteredData.slice(0,100)}/>
+        <SearchBar onChange={(event) => handleSearch(event)} placeholder={'->MY MAN LINNY<-'}/>
+        <Stats dataLength={filteredData.length}/>
+        <MasterTable rows={filteredData.slice(0,30)}/>
     </form>
     </div>
     )

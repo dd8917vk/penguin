@@ -14,7 +14,7 @@ const MasterTable = (props) => {
 <Container fluid>
   <Table striped bordered hover variant="dark" size="sm">
   <thead>
-    <tr>
+    <tr style={{color:"#008F11"}}>
       <th>ascify</th>
       <th>command</th>
       <th>description</th>

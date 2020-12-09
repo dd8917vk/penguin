@@ -4,9 +4,11 @@ import styles from './MasterTable.module.css'
 import { Link } from 'react-router-dom'
 
 const MasterTable = (props) => {
-  const ascify = async (event) => {
+  const ascify = (event) => {
     let baseUrl = 'https://artii.herokuapp.com/make?text='
-    let siblingNode = event.target.nextSibling.childNodes[0].nodeValue;
+    // let siblingNode = event.target.nextSibling.childNodes[0].nodeValue;
+    let siblingNode = event.target.nextSibling.children[0].childNodes[0].nodeValue
+    console.log(siblingNode)
     let apiCall = `${baseUrl}+${siblingNode}`
     window.open(apiCall, "_blank")
 // console.log(event)

@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Commands(models.Model):
     command = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
+    description = models.TextField()
     link = models.CharField(max_length=255)
     html = models.TextField()
     favorite = models.BooleanField(default=False)

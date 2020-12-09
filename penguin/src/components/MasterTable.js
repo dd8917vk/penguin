@@ -22,6 +22,7 @@ const MasterTable = (props) => {
       <th>favorite</th>
     </tr>
   </thead>
+  {props.searchText.length > 0 ? 
   <tbody>
       {props.rows?.map((item, index)=> (
         <tr key={index}>
@@ -32,6 +33,7 @@ const MasterTable = (props) => {
         </tr>
         ))}
   </tbody>
+: null }
 </Table> 
 </Container>
     )

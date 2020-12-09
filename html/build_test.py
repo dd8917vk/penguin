@@ -91,7 +91,7 @@ compare(flatten_links())
 
 def dump_json(man_page_array):
     with open('cleaned_data.json', 'w') as json_file:
-        json.dump(man_page_array, json_file, indent=2)
+        json.dump(man_page_array, json_file, indent=4)
 
 dump_json(man_page_array)
 #import pdb;pdb.set_trace()

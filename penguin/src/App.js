@@ -5,6 +5,8 @@ import Home from './pages/Home'
 import ManualPage from './pages/ManualPage'
 import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
 
+//cat wines.json | heroku run --no-tty -a wineapi1983 -- python manage.py loaddata --format=json -
+//http://quotes.stormconsultancy.co.uk/random.json
 
 
 function App(props) {

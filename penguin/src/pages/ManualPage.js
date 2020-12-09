@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar'
 
 
 const ManualPage = ({ match }) => {
-    console.log('match', match)
+    console.log('match', match.params.command)
 
 const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
 

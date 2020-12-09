@@ -5,6 +5,7 @@ import MasterTable from './MasterTable'
 import Stats from './Stats'
 import { atom, useRecoilState } from 'recoil'
 import { createHtmlDataState } from '../globalstate/atom'
+import Quote from './Quote'
 
 const SearchBar = styled.input`
     display:block;
@@ -19,7 +20,7 @@ const SearchBar = styled.input`
     color: #00FF41;
     border: 2px solid #00FF41;
     background-color: #0D0208;
-    border-radius: 2px;
+    border-radius: 5px;
 `
 
 
@@ -59,7 +60,8 @@ export default function SearchData(props) {
     <form className="inputPlain">
         <SearchBar onChange={(event) => handleSearch(event)} placeholder={'->MY MAN LINNY<-'}/>
         <Stats dataLength={filteredData.length}/>
-        <MasterTable rows={filteredData.slice(0,30)}/>
+        <MasterTable rows={filteredData.slice(0,30)} searchText={searchText}/>
+        <Quote searchText={searchText}/>
     </form>
     </div>
     )

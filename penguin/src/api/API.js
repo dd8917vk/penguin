@@ -8,10 +8,16 @@ const getHtmlData= async ()=>{
     const data = await response.json();
     return data;
 }
+const getRandomQuote = async () => {
+  const response = await fetch('http://quotes.stormconsultancy.co.uk/random.json');
+  const data = await response.json();
+  return data;
+}
 // const getAsciiArt = async (text) = {
 //   const response = await fetch(`https://artii.herokuapp.com/make?text=linux+rules`)
 // }
 export {
   getData,
-  getHtmlData
+  getHtmlData,
+  getRandomQuote,
 }

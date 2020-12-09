@@ -12,7 +12,7 @@ function Navbar() {
     return (
         <>
         <div className={styles.navbar}>
-            <a href="https://www.kernel.org/doc/man-pages/">Official</a>
+            <a href="https://www.kernel.org/doc/man-pages/" target="_blank">Official</a>
             <Link to={`/manpage/${htmlData[0]?.command}`}>
                 <p>About</p>
             </Link>

@@ -13,7 +13,7 @@ const Stats = (props) => {
         <div>
             <ul>
                 <li><a href="https://www.kernel.org/doc/man-pages/" target="_blank">Official</a> &bull;&nbsp;</li>
-                <li>manPages: {props.dataLength} &bull;&nbsp;</li>
+                <li>results: {props.dataLength} &bull;&nbsp;</li>
                 <li>epochTime: {epoch}&nbsp;</li>
             </ul>
         </div> 

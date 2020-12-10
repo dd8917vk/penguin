@@ -14,6 +14,7 @@ function App(props) {
   return (
     <div className="App">
       <Router>
+        {/* change component to render to call function */}
         <Route exact path="/" component={Home} />
         <Route exact path="/manpage/:command" component={ManualPage} />
         <Route exact path="/about" component={Home} />

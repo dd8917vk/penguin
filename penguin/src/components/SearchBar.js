@@ -13,7 +13,7 @@ const SearchBar = styled.input`
     margin-bottom: 20px;
     width: 96%;
     height: 5rem;
-    font-size: 2rem;
+    font-size: 2.2rem;
     text-align: center;
     border: 0;
     outline: none;
@@ -28,10 +28,11 @@ export default function SearchData(props) {
     const [data, setData] = useState([])
     const [filteredData, setFilteredData] = useState([])
     const [searchText, setSearchText] = useState('')
+
+    //Need one of these (either recoil or standard useState to fetch json html locally)
     //const [htmlData, setHtmlData] = useState([])
-    
-    const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
-    
+    //const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
+
     const handleSearch = (event) => {
         setSearchText(event.target.value.toLowerCase()); 
         if (searchText !== ""){
@@ -47,8 +48,9 @@ export default function SearchData(props) {
             const result = await getData()
             setData(result)
             setFilteredData([])
-            const htmlResult = await getHtmlData()
-            setHtmlData(htmlResult)
+            //fetches all html data below from local json
+            //const htmlResult = await getHtmlData()
+            //setHtmlData(htmlResult)
         }
         return function cleanup(){
             isMounted = false;

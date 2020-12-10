@@ -1,20 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getHtmlData } from '../api/API'
-import { atom, useRecoilState } from 'recoil'
-import { createHtmlDataState } from '../globalstate/atom'
 import Navbar from '../components/Navbar'
+import { getHtmlDataByCommand } from '../api/API'
+import styles from './ManualPage.module.css'
+import { Table, Container, Row } from 'react-bootstrap';
+
 
 
 const ManualPage = ({ match }) => {
-    console.log('match', match.params.command)
+    let command = match.params.command;
+    const [htmlData, setHtmlData] = useState({})
+    useEffect(()=>{
+        const data = async () => await getHtmlDataByCommand(command)
+        let results = data().then(resp => setHtmlData(resp))
 
-const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
+    }, [])
 
+    const createMarkup = () => {
+        return {__html: htmlData?.html?.trim().replace(/\n/g, "")
+    .replace(/[\t ]+\</g, "<")
+    .replace(/\>[\t ]+\</g, "><")
+    .replace(/\>[\t ]+$/g, ">")}
+    }
 
+    //console.log(htmlData?.id)
+    
     return (
-        <div>
-            <Navbar />
-        </div>
+
+        <>
+            {htmlData ? <><Navbar />
+            <div style={{paddingTop:"150px", fontSize: "14px", backgroundColor:"black", textAlign:"center"}}dangerouslySetInnerHTML={createMarkup()}></div>
+            </> : <div style={{paddingTop:"150px"}}>LOADING</div>}
+        </>
     )
 }
 

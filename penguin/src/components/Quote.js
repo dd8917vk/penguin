@@ -22,13 +22,14 @@ const QuoteText = styled.p`
 `
 const Quote = (props) => {
     const [randomQuote, setRandomQuote] = useState({})
-    console.log(randomQuote)
 
     useEffect(async ()=> {
         const quote = await getRandomQuote();
         setRandomQuote(quote)
         
     }, [])
+
+
     return (
         <div>
             {props.searchText.length < 0 ? null :

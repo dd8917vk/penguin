@@ -11,8 +11,28 @@ const MasterTable = (props) => {
     console.log(siblingNode)
     let apiCall = `${baseUrl}+${siblingNode}`
     window.open(apiCall, "_blank")
-// console.log(event)
   }
+  const setFavorite = (event) => {
+    //get command when favorite clicked
+    let seen = null
+    let oldItems = JSON.parse(localStorage.getItem('commandsArray')) || [];
+    let command = event.target.parentNode.childNodes[1].innerText;
+    //oldItems.includes(command) ? oldItems = oldItems.filter(word=>word!=command) : oldItems.push(command)
+    if (oldItems.includes(command)){
+      oldItems = oldItems.filter(word=>word!==command);
+      seen = false;
+    } else {
+      oldItems.push(command)
+      seen = true;
+    }
+    console.log(oldItems)
+    localStorage.setItem('commandsArray', JSON.stringify(oldItems))
+    console.log(seen)
+    return seen
+
+    // console.log(event.target.parentElement)//childNodes[1].value)
+  }
+
     return (
 <Container fluid>
   <Table striped bordered hover variant="dark" size="sm">
@@ -28,10 +48,10 @@ const MasterTable = (props) => {
   <tbody>
       {props.rows?.map((item, index)=> (
         <tr key={index}>
-            <td style={{cursor: "pointer"}}onClick={ascify}>ascify</td>
+            <td style={{cursor: "pointer"}} onClick={ascify}>ascify</td>
             <td><Link to={`/manpage/${item?.command}`}>{item?.command}</Link></td>
             <td>{item?.description}</td>
-            <td>favorites</td>
+            <td onClick={setFavorite}>favorites</td>
         </tr>
         ))}
   </tbody>

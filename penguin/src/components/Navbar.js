@@ -10,10 +10,9 @@ function Navbar() {
     const [loggedIn, setLoggedIn] = useState(false)
     const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
     return (
-        <>
         <div className={styles.navbar}>
             <a href="https://www.kernel.org/doc/man-pages/" target="_blank">Official</a>
-            <Link to={`/manpage/${htmlData[0]?.command}`}>
+            <Link to="/about">
                 <p>About</p>
             </Link>
             <Link to="/favorites">
@@ -31,7 +30,6 @@ function Navbar() {
                 <p>Login</p>
             </Link>}
         </div>
-        </>
     )
 }
 

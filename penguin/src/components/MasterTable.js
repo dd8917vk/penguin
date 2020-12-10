@@ -55,7 +55,7 @@ const MasterTable = (props) => {
 									<Link to={`/manpage/${item?.command}`}>{item?.command}</Link>
 								</td>
 								<td>{item?.description}</td>
-								<td onClick={isFavorite}>favorites</td>
+								<td style={{ cursor: "pointer" }} onClick={isFavorite}>favorites</td>
 							</tr>
 						))}
 					</tbody>

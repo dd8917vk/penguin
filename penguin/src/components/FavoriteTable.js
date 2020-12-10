@@ -8,6 +8,20 @@ const FavoriteTable = () => {
         renderFavorites()
     }, [])
 
+    const deleteFavorite = (event) => {
+        event.preventDefault()
+        let oldItems = JSON.parse(localStorage.getItem("commandsArray")) || [];
+        let command = event.target.id//.childNodes[2].innerText;
+        const checkExists = obj => obj.command === command;
+        const result = oldItems.filter(item=>item.command !== command)
+        setFavorites(result)
+        localStorage.setItem("commandsArray", JSON.stringify(result))
+        console.log(localStorage)
+		    // if (oldItems.some(checkExists)) {
+            //     console.log(oldItems[item])
+		    // }
+    }
+
     const renderFavorites = () => {
         let oldItems = JSON.parse(localStorage.getItem("commandsArray")) || [];
         setFavorites(oldItems)
@@ -15,10 +29,6 @@ const FavoriteTable = () => {
 
 
     }
-    const deleteFavorite = (event) => {
-		//get command when favorite clicked
-        let oldItems = JSON.parse(localStorage.getItem("commandsArray")) || [];
-    };
 
     return (
         <div style={{marginTop:"80px"}}>
@@ -38,7 +48,7 @@ const FavoriteTable = () => {
                             <tr>
                                 <td>{item.command}</td>
                                 <td>{item.description}</td>
-                                <td><button style={{color:"black"}}>remove</button></td>
+                                <td><button id={item.command} onClick={deleteFavorite} style={{color:"black"}}>remove</button></td>
                             </tr>)
                         })}
 						{/* {props.rows?.map((item, index) => (

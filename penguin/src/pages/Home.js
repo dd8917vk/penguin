@@ -5,6 +5,7 @@ import Hr from '../components/Hr'
 import { RecoilRoot, useRecoilState } from 'recoil';
 import { createHtmlDataState } from '../globalstate/atom'
 import { getHtmlData } from '../api/API'
+import styles from './Home.module.css'
 
 import {
   BrowserRouter as Router,

@@ -13,7 +13,12 @@ function Navbar() {
     return (
         <div>
         <div className={styles.navbar}>
-            <a href="https://www.kernel.org/doc/man-pages/" target="_blank">Official</a>
+            {/* <Link to={{pathname:"https://www.kernel.org/doc/man-pages/"}}>
+                <p>Official</p>
+            </Link> */}
+            <Link to={{ pathname: "https://www.kernel.org/doc/man-pages/" }} target="_blank"><p>Official</p></Link>
+
+            {/* <a href="https://www.kernel.org/doc/man-pages/" target="_blank">Official</a> */}
             <Link to="/about">
                 <p>About</p>
             </Link>

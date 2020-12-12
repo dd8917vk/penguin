@@ -17,8 +17,6 @@ const Home = () => {
 
     return (
         <div>
-            <Hr />
-            <Navbar className="navbar" style={{paddingTop:"100px"}}/> 
             <SearchData />
         </div>
     )

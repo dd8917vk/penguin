@@ -58,11 +58,11 @@ export default function SearchData(props) {
       },[])
 
     return (
-    <div>
+    <div style={{marginTop:"50px"}}>
     <form className="inputPlain">
         <SearchBar onChange={(event) => handleSearch(event)} placeholder={'->MY MAN LINNY<-'}/>
         <Stats dataLength={filteredData.length}/>
-        <MasterTable rows={filteredData.slice(0,30)} searchText={searchText}/>
+        <MasterTable rows={filteredData.slice(0,40)} searchText={searchText}/>
         <Quote searchText={searchText}/>
     </form>
     </div>

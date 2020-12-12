@@ -3,13 +3,15 @@ import styles from './Navbar.module.css'
 import { Link } from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil'
 import { createHtmlDataState } from '../globalstate/atom';
-
+import Hr from './Hr';
+import logo from '../static/peng1.png';
 
 function Navbar() {
 
     const [loggedIn, setLoggedIn] = useState(false)
     const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
     return (
+        <div>
         <div className={styles.navbar}>
             <a href="https://www.kernel.org/doc/man-pages/" target="_blank">Official</a>
             <Link to="/about">
@@ -21,7 +23,6 @@ function Navbar() {
             <Link style={{float:"right"}} to="/">
                 <p>Home</p>
             </Link>
-
             {loggedIn ? <Link style={{float:"right"}} to="/logout">
                 <p>Logout</p>
             </Link> : null}
@@ -29,8 +30,10 @@ function Navbar() {
             {loggedIn ? null : <Link style={{float:"right"}} to="/login">
                 <p>Login</p>
             </Link>}
+            <p><img id="peng" src={logo}></img></p>
+        </div>
         </div>
     )
 }
 
-export default Navbar
+export default Navbar;

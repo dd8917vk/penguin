@@ -10,10 +10,12 @@ import { Table, Container, Row } from 'react-bootstrap';
 const ManualPage = ({ match }) => {
     let command = match.params.command;
     const [htmlData, setHtmlData] = useState({})
-    useEffect(()=>{
+    useEffect(()=> {
         const data = async () => await getHtmlDataByCommand(command)
-        let results = data().then(resp => setHtmlData(resp))
-
+        let results = data().then(resp => {
+            setHtmlData(resp);
+            console.log(resp);
+        });
     }, [])
 
     const createMarkup = () => {
@@ -29,7 +31,7 @@ const ManualPage = ({ match }) => {
 
         <>
             {htmlData ? <><Navbar />
-            <div style={{paddingTop:"150px", fontSize: "14px", backgroundColor:"black", textAlign:"center"}}dangerouslySetInnerHTML={createMarkup()}></div>
+            <div style={{paddingTop:"150px", fontSize: "14px", backgroundColor:"black", textAlign:"center"}} dangerouslySetInnerHTML={createMarkup()}></div>
             </> : <div style={{paddingTop:"150px"}}>LOADING</div>}
         </>
     )

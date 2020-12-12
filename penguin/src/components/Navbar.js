@@ -23,9 +23,7 @@ function Navbar() {
             <Link to="/favorites">
                 <p>Favorites</p>
             </Link>
-            <Link style={{float:"right"}} to="/">
-                <p>Home</p>
-            </Link>
+            <Link to="/" style={{float:"right"}}><p><img style={{width:"50px", margin:"auto auto"}}id="peng" src={logo}></img></p></Link>
             {loggedIn ? <Link style={{float:"right"}} to="/logout">
                 <p>Logout</p>
             </Link> : null}
@@ -33,7 +31,7 @@ function Navbar() {
             {loggedIn ? null : <Link style={{float:"right"}} to="/login">
                 <p>Login</p>
             </Link>}
-            <p><img id="peng" src={logo}></img></p>
+            
         </div>
     )
 }

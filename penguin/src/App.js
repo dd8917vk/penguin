@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-r
 import Favorites from './pages/Favorites';
 import Navbar from './components/Navbar';
 import Hr from './components/Hr'
+import Feedback from './pages/Feedback'
 //cat wines.json | heroku run --no-tty -a wineapi1983 -- python manage.py loaddata --format=json -
 //http://quotes.stormconsultancy.co.uk/random.json
 
@@ -22,6 +23,7 @@ function App(props) {
         <Route exact path="/manpage/:command" component={ManualPage} />
         <Route exact path="/about" component={Home} />
         <Route exact path="/favorites" component={Favorites} />
+        <Route exact path="/feedback" component={Feedback} />
       </Router>
     </div>
     

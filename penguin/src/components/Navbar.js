@@ -23,6 +23,9 @@ function Navbar() {
             <Link to="/favorites">
                 <p>Favorites</p>
             </Link>
+            <Link to="/feedback">
+                <p>Feedback</p>
+            </Link>
             <Link to="/" style={{float:"right"}}><p><img style={{width:"50px", margin:"auto auto"}}id="peng" src={logo}></img></p></Link>
             {loggedIn ? <Link style={{float:"right"}} to="/logout">
                 <p>Logout</p>

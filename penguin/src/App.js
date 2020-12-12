@@ -6,6 +6,7 @@ import ManualPage from './pages/ManualPage';
 import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
 import Favorites from './pages/Favorites';
 import Navbar from './components/Navbar';
+import Hr from './components/Hr'
 //cat wines.json | heroku run --no-tty -a wineapi1983 -- python manage.py loaddata --format=json -
 //http://quotes.stormconsultancy.co.uk/random.json
 

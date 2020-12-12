@@ -6,6 +6,8 @@
   position: fixed;
   top: 0;
   width: 100%;
+  padding-top:0;
+  border-bottom: 4px solid #008F11;
 }
 .navbar a {
   font-family: 'VT323', monospace;

@@ -5,9 +5,7 @@ import FavoriteTable from '../components/FavoriteTable'
 const Favorites = () => {
     return (
         <div>
-            <Navbar/>
             <FavoriteTable/>
-            
         </div>
     )
 }

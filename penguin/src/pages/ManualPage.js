@@ -4,12 +4,14 @@ import Navbar from '../components/Navbar'
 import { getHtmlDataByCommand } from '../api/API'
 import styles from './ManualPage.module.css'
 import { Table, Container, Row } from 'react-bootstrap';
-
-
+import createDOMPurify from 'dompurify';
+import { JSDOM } from 'jsdom';
 
 const ManualPage = ({ match }) => {
+
     let command = match.params.command;
     const [htmlData, setHtmlData] = useState({})
+
     useEffect(()=> {
         const data = async () => await getHtmlDataByCommand(command)
         let results = data().then(resp => {
@@ -18,11 +20,15 @@ const ManualPage = ({ match }) => {
         });
     }, [])
 
+    const window = (new JSDOM('')).window
+    const DOMPurify = createDOMPurify(window)
+    const rawHTML = htmlData?.html;
+    
     const createMarkup = () => {
-        return {__html: htmlData?.html?.trim().replace(/\n/g, "")
+        return (htmlData?.html?.trim().replace(/\n/g, "")
     .replace(/[\t ]+\</g, "<")
     .replace(/\>[\t ]+\</g, "><")
-    .replace(/\>[\t ]+$/g, ">")}
+    .replace(/\>[\t ]+$/g, ">"))
     }
 
     //console.log(htmlData?.id)
@@ -30,9 +36,17 @@ const ManualPage = ({ match }) => {
     return (
 
         <>
+        <Navbar/>
+        <div>
+            {/* This safely sets dangerouslySetInnerHtml */}
             {htmlData ? <><Navbar />
-            <div style={{paddingTop:"150px", fontSize: "14px", backgroundColor:"black", textAlign:"center"}} dangerouslySetInnerHTML={createMarkup()}></div>
+            <div style={{paddingTop:"100px", fontSize: "14px", backgroundColor:"black", textAlign:"center"}} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(createMarkup())}}></div>
             </> : <div style={{paddingTop:"150px"}}>LOADING</div>}
+        </div>
+
+            {/* {htmlData ? <><Navbar />
+            <div style={{paddingTop:"150px", fontSize: "14px", backgroundColor:"black", textAlign:"center"}} dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(createMarkup())}}></div>
+            </> : <div style={{paddingTop:"150px"}}>LOADING</div>} */}
         </>
     )
 }

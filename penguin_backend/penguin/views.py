@@ -2,16 +2,22 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import CommandSerializer
-from .models import Commands
+from .serializers import CommandSerializer, PostSerializer, FavoritesSerializer
+from .models import Commands, Post, Favorites, User
 
-
+#Commands
 @api_view(['GET'])
 def command_overview(request):
     api_urls = {
         'List': '/command_list/',
         #'Detail': '/beerview/<int:pk>/',
         'DetailByName': '/commandview/<str:name>/',
+        'PostList': '/post_list/',
+        'PostCreate': '/post_create/',
+        'FavoriteList': '/favorites_list/',
+        'FavoriteCreate': '/favorites_create/',
+        'FavoriteCreate': '/favorites_update/<int:pk>/',
+        'FavoriteDelete': '/favorites_delete/<int:pk>/',
         # 'Create': '/beercreate/',
         # 'Update': '/beerupdate/<int:pk>/',
         # 'Delete': '/beerdelete/<int:pk/>',
@@ -33,6 +39,56 @@ def command_view_by_name(request, command):
     #many=true, if querying multiple items
     serializer = CommandSerializer(command.first(), many=False)
     return Response(serializer.data)
+
+#Post
+@api_view(['GET'])
+def post_list(request):
+    posts = Post.objects.all()
+    #many=true, if querying multiple items
+    serializer = PostSerializer(posts, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def post_create(request):
+    serializer = PostSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+#Favorites
+@api_view(['GET'])
+def favorites_list(request):
+    favorites = Favorites.objects.all()
+    #many=true, if querying multiple items
+    serializer = FavoritesSerializer(favorites, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def favorites_create(request):
+    serializer = FavoritesSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def favorites_update(request, pk):
+    try:
+        favorites_update = Favorites.objects.get(id=pk)
+    except:
+        return Response('Could not find the object you were trying to update.')
+    serializer = FavoritesSerializer(instance=favorites_update, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+def favorites_delete(request, pk):
+    try:
+        delete_favorite = Favorites.objects.get(id=pk)
+        delete_favorite.delete()
+    except:
+        return Response('Could not find the object you were trying to delete.')
+    return Response('Item deleted successfully')
 
 # @api_view(['GET'])
 # def beer_view(request, pk):

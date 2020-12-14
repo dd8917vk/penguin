@@ -41,10 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'penguin',
     'django_extensions',
-    'rest_framework'
+    'rest_framework',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -82,9 +84,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'penguin',
-        # 'USER': 'ormUser',
-        # 'PASSWORD': '....',
-        # 'HOST': 'localhost'
+        'USER': 'ormUser',
+        'PASSWORD': '....',
+        'HOST': 'localhost'
     }
 }
 
@@ -106,7 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
+#NEED THIS FOR LOCALDEV
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:3000'
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/

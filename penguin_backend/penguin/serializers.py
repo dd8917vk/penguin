@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Commands
+from .models import Commands, Post, Favorites
 
 # class BeerSerializer(serializers.ModelSerializer):
 #     class Meta:
@@ -8,4 +8,12 @@ from .models import Commands
 class CommandSerializer(serializers.ModelSerializer):
     class Meta:
         model = Commands
+        fields = '__all__'
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Post
+        fields = '__all__'
+class FavoritesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Favorites
         fields = '__all__'

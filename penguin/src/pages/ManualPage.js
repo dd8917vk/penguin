@@ -7,6 +7,7 @@ import { Table, Container, Row } from 'react-bootstrap';
 import createDOMPurify from 'dompurify';
 import { JSDOM } from 'jsdom';
 
+
 const ManualPage = ({ match }) => {
 
     let command = match.params.command;

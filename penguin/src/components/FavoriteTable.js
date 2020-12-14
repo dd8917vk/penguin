@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Container, Row } from "react-bootstrap";
 import { getAllFavorites } from '../api/API';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Comment from '../components/Comment';
+
 
 const FavoriteTable = (props) => {
     //This is command and description in props obj
@@ -17,6 +21,16 @@ const FavoriteTable = (props) => {
         //renderFavorites()
     }, [])
 
+	const notify = () => toast.dark('🐧 DELETED!', {
+		position: "bottom-right",
+		autoClose: 3000,
+		hideProgressBar: true,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+        });
+
 	const deleteFavorite = async (event) => {
 		event.preventDefault();
 		let command = event.target.parentElement.parentElement.children[0].innerText;
@@ -30,11 +44,13 @@ const FavoriteTable = (props) => {
 		}});
 		const content = await rawResponse.json();
 		console.log(rawResponse);
-        window.alert(rawResponse.status === 200 ? 'Favorite deleted.' : 'Unable to delete'); 
         if (rawResponse.status === 200) {
             setFavorites(favorites.filter(e => e.id !== id));
             // let index = favorites.findIndex(e => e.id === id);
             // favorites.splice(index, 1);
+            notify()
+        } else {
+            alert("Unable to delete!")
         }
 	}
     //localStorage
@@ -74,12 +90,25 @@ const FavoriteTable = (props) => {
 					<tbody>
                         {favorites.map((item, index)=>{
                             return ( 
-                            <tr>
-                                <td>{item.command}</td>
-                                <td>{item.description}</td>
-                                <td>{item.comment}</td>
+                            <tr key={index}>
+                                <td style={{maxWidth: "50px", wordWrap: "break-word"}}>{item.command}</td>
+                                <td style={{maxWidth: "30px", wordWrap: "break-word"}}>{item.description}</td>
+                                <td style={{maxWidth: "200px", wordWrap: "break-word"}}><Comment text={{title:item.description}}/></td>
+                                {/* <td>{item.comment}</td> */}
                                 <td><button id={item.command} style={{color:"black"}} onClick={deleteFavorite}>remove</button></td>
-                                <td><button style={{color:"black"}}>edit</button></td>
+                                <td><button style={{color:"black"}}>edit</button>
+                                <ToastContainer
+								position="bottom-right"
+								autoClose={3000}
+								hideProgressBar={true}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								></ToastContainer>
+                                </td>
                             </tr>)
                         })}
                     </tbody>

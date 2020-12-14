@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Table, Container, Row } from "react-bootstrap";
 import styles from "./MasterTable.module.css";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const MasterTable = (props) => {
 	const [favorite, setFavorite] = useState(false);
@@ -30,8 +32,18 @@ const MasterTable = (props) => {
 		});
 		const content = await rawResponse.json();
 		console.log(rawResponse);
-		window.alert(rawResponse.status === 200 ? 'Favorite added successfully!' : 'Unable to create favorite.'); 
+		rawResponse.status === 200 ? notify() : alert('Unable to add favorite.'); 
 	}
+
+	const notify = () => toast.dark('🐧 FAVORITE ADDED!', {
+		position: "bottom-right",
+		autoClose: 3000,
+		hideProgressBar: true,
+		closeOnClick: true,
+		pauseOnHover: true,
+		draggable: true,
+		progress: undefined,
+		});
 // If you want localstorage for favorites
 // 	const isFavorite = (event) => {
 // 		//get command when favorite clicked
@@ -73,7 +85,18 @@ const MasterTable = (props) => {
 									<Link to={`/manpage/${item?.command}`}>{item?.command}</Link>
 								</td>
 								<td>{item?.description}</td>
-								<td style={{ cursor: "pointer"}}><button onClick={addFavorite}>favorite</button>
+								<td style={{ cursor: "pointer"}}><button style={{color:"whitesmoke", backgroundColor:"#0D0208", borderRadius:"2px"}} onClick={addFavorite}>favorite</button>
+								<ToastContainer
+								position="bottom-right"
+								autoClose={3000}
+								hideProgressBar={true}
+								newestOnTop={false}
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								></ToastContainer>
 								</td>
 							</tr>
 						))}

@@ -22,7 +22,7 @@ class Post(models.Model):
         return f'Title: {self.title} Author: {self.author} Date Posted: {self.date_posted}'
 
 class Favorites(models.Model):
-    command = models.CharField(max_length=255)
+    command = models.CharField(unique=True, max_length=255)
     description = models.TextField()
     comment = models.TextField()
     author = models.ForeignKey(User, null=True, on_delete=models.CASCADE)

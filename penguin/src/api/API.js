@@ -27,9 +27,17 @@ const getRandomQuote = async () => {
 // const getAsciiArt = async (text) = {
 //   const response = await fetch(`https://artii.herokuapp.com/make?text=linux+rules`)
 // }
+
+const getAllFavorites = async ()=>{
+    const response = await fetch('http://localhost:8000/api/favorites_list/'); //FOR LOCAL DEV
+    const data = await response.json();
+    return data;
+}
+
 export {
   getData,
   getHtmlData,
   getRandomQuote,
   getHtmlDataByCommand,
+  getAllFavorites,
 }

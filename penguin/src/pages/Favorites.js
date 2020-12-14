@@ -2,10 +2,11 @@ import Navbar from '../components/Navbar'
 import { Table, Container, Row } from "react-bootstrap";
 import FavoriteTable from '../components/FavoriteTable'
 
-const Favorites = () => {
+const Favorites = (props) => {
+    let obj = props.location.state;
     return (
         <div>
-            <FavoriteTable/>
+            <FavoriteTable props_obj={obj} />
         </div>
     )
 }

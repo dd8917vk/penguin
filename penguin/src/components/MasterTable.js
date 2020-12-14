@@ -15,23 +15,41 @@ const MasterTable = (props) => {
 		window.open(apiCall, "_blank");
 	};
 
-	const isFavorite = (event) => {
-		//get command when favorite clicked
-		let oldItems = JSON.parse(localStorage.getItem("commandsArray")) || [];
-		let command = event.target.parentNode.childNodes[1].innerText;
-		let description = event.target.parentNode.childNodes[2].innerText;
-		console.log(oldItems)
-		let entry = {
-			"command": command,
-			"description": description,
-		};
-		const checkExists = obj => obj.command === command;
-		if (!(oldItems.some(checkExists))) {
-			oldItems.push(entry)
-		}
-		localStorage.setItem("commandsArray", JSON.stringify(oldItems));
-		console.log(localStorage)
-  };
+	const addFavorite = async (event) => {
+		event.preventDefault();
+		let command = event.target.parentElement.parentElement.children[1].innerText;
+		let description = event.target.parentElement.parentElement.children[2].innerText;
+		console.log(command,description);
+		const rawResponse = await fetch('http://localhost:8000/api/favorites_create/', {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({command: command, description: description, comment: 'Enter comment here', author: 2})
+		});
+		const content = await rawResponse.json();
+		console.log(rawResponse);
+		window.alert(rawResponse.status === 200 ? 'Favorite added successfully!' : 'Unable to create favorite.'); 
+	}
+// If you want localstorage for favorites
+// 	const isFavorite = (event) => {
+// 		//get command when favorite clicked
+// 		let oldItems = JSON.parse(localStorage.getItem("commandsArray")) || [];
+// 		let command = event.target.parentNode.childNodes[1].innerText;
+// 		let description = event.target.parentNode.childNodes[2].innerText;
+// 		console.log(oldItems)
+// 		let entry = {
+// 			"command": command,
+// 			"description": description,
+// 		};
+// 		const checkExists = obj => obj.command === command;
+// 		if (!(oldItems.some(checkExists))) {
+// 			oldItems.push(entry)
+// 		}
+// 		localStorage.setItem("commandsArray", JSON.stringify(oldItems));
+// 		console.log(localStorage)
+//   };
 
 	return (
 		<Container fluid>
@@ -55,7 +73,8 @@ const MasterTable = (props) => {
 									<Link to={`/manpage/${item?.command}`}>{item?.command}</Link>
 								</td>
 								<td>{item?.description}</td>
-								<td style={{ cursor: "pointer" }} onClick={isFavorite}>favorites</td>
+								<td style={{ cursor: "pointer"}}><button onClick={addFavorite}>favorite</button>
+								</td>
 							</tr>
 						))}
 					</tbody>

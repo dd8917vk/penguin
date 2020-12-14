@@ -16,7 +16,7 @@ def command_overview(request):
         'PostCreate': '/post_create/',
         'FavoriteList': '/favorites_list/',
         'FavoriteCreate': '/favorites_create/',
-        'FavoriteCreate': '/favorites_update/<int:pk>/',
+        'FavoriteUpdate': '/favorites_update/<int:pk>/',
         'FavoriteDelete': '/favorites_delete/<int:pk>/',
         # 'Create': '/beercreate/',
         # 'Update': '/beerupdate/<int:pk>/',

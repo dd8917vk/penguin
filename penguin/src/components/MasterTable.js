@@ -28,7 +28,7 @@ const MasterTable = (props) => {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({command: command, description: description, comment: 'Enter comment here', author: 2})
+		body: JSON.stringify({command: command, description: description, comment: 'Click to enter comment', author: 2})
 		});
 		const content = await rawResponse.json();
 		console.log(rawResponse);

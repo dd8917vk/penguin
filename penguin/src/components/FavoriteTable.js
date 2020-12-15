@@ -82,9 +82,8 @@ const FavoriteTable = (props) => {
 					<tr style={{ color: "#008F11" }}>
 						<th>command</th>
 						<th>description</th>
-						<th>comments</th>
+						<th>click edit comments</th>
 						<th>delete</th>
-						<th>edit</th>
 					</tr>
 				</thead>
 					<tbody>
@@ -93,10 +92,9 @@ const FavoriteTable = (props) => {
                             <tr key={index}>
                                 <td style={{maxWidth: "50px", wordWrap: "break-word"}}>{item.command}</td>
                                 <td style={{maxWidth: "30px", wordWrap: "break-word"}}>{item.description}</td>
-                                <td style={{maxWidth: "200px", wordWrap: "break-word"}}><Comment text={{title:item.description}}/></td>
+                                <td style={{maxWidth: "200px", wordWrap: "break-word", cursor:"pointer"}}><Comment id={item.id} cmd={item.command} desc={item.description} text={{title:item.comment}}/></td>
                                 {/* <td>{item.comment}</td> */}
                                 <td><button id={item.command} style={{color:"black"}} onClick={deleteFavorite}>remove</button></td>
-                                <td><button style={{color:"black"}}>edit</button>
                                 <ToastContainer
 								position="bottom-right"
 								autoClose={3000}
@@ -108,7 +106,6 @@ const FavoriteTable = (props) => {
 								draggable
 								pauseOnHover
 								></ToastContainer>
-                                </td>
                             </tr>)
                         })}
                     </tbody>

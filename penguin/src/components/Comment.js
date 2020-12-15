@@ -39,7 +39,6 @@ const CardTitle = styled.p`
 
 export default function Comment(props) {
     const text = props.text
-    console.log(text)
     const [textContent, setTextContent] = useState(text);
     const [showTitle, setShowTitle] = useState(true);
     const inputEl = useRef(null);
@@ -62,17 +61,39 @@ export default function Comment(props) {
     };
     const handleShowTitle = () => {
       setShowTitle(!showTitle);
-      console.log('out')
+      setTextContent(textContent)
+      console.log(textContent)
+      updateFavorite(textContent.title)
     };
   
     const handleSelectText = (event) => inputEl.current.select();
+
+
+	const updateFavorite = async (newText) => {
+		let command = props.cmd;
+        let description = props.desc;
+        let id = props.id;
+		console.log(id,command,description);
+		const rawResponse = await fetch(`http://localhost:8000/api/favorites_update/${id}/`, {
+		method: 'POST',
+		headers: {
+			'Accept': 'application/json',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({command: command, description: description, comment: newText, author: 2})
+		});
+		const content = await rawResponse.json();
+		console.log(rawResponse);
+		// rawResponse.status === 200 ? notify() : alert('Unable to add favorite.'); 
+	}
+
     return (
       <div>
           {showTitle ? (
             <CardTitle onClick={handleShowTitle}>{textContent?.title}</CardTitle>
           ) : (
             <CardInput
-              autofocus={true}
+            //   autoFocus={true}
               ref={inputEl}
               onChange={handleTitleValue}
               onBlur={handleShowTitle}

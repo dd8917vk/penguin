@@ -25,9 +25,9 @@ const SearchBar = styled.input`
 
 
 export default function SearchData(props) {
-    const [data, setData] = useState([])
-    const [filteredData, setFilteredData] = useState([])
-    const [searchText, setSearchText] = useState('')
+    const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
+    const [searchText, setSearchText] = useState('');
 
     //Need one of these (either recoil or standard useState to fetch json html locally)
     //const [htmlData, setHtmlData] = useState([])
@@ -35,19 +35,19 @@ export default function SearchData(props) {
 
     const handleSearch = (event) => {
         setSearchText(event.target.value.toLowerCase()); 
-        if (searchText !== ""){
+        // if (searchText !== ""){
             setFilteredData(data.filter(item=>{
                 const command = item.command.toLowerCase();
                 return command.includes(searchText);
-            }).sort((a,b)=>a.command.length-b.command.length))
-        }
+            }).sort((a,b)=>a.command.length-b.command.length));
+        // }
     }
     useEffect(async ()=>{
         let isMounted = true;
         if(isMounted){
-            const result = await getData()
-            setData(result)
-            setFilteredData([])
+            const result = await getData();
+            setData(result);
+            setFilteredData([]);
             //fetches all html data below from local json
             //const htmlResult = await getHtmlData()
             //setHtmlData(htmlResult)

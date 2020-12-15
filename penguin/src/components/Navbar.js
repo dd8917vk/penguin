@@ -1,11 +1,23 @@
 import React, { useState, useParams } from 'react'
 import styles from './Navbar.module.css'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil'
 import { createHtmlDataState } from '../globalstate/atom';
 import logo from '../static/peng1.png';
 
-function Navbar() {
+function Navbar(props) {
+
+    let hist = useHistory()
+    if(!props.isLoggedIn){
+        hist.push('/');
+    }
+    hist.push('/');
+    const handleLogout = () =>{
+        console.log(props)
+        localStorage.removeItem('user');
+        props.setIsLoggedIn(false);
+        props.setUser(null);
+    }
 
     const [loggedIn, setLoggedIn] = useState(false)
     const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
@@ -27,13 +39,16 @@ function Navbar() {
                 <p>Feedback</p>
             </Link>
             <Link to="/" style={{float:"right"}}><p><img style={{width:"50px", margin:"auto auto"}}id="peng" src={logo}></img></p></Link>
-            {loggedIn ? <Link style={{float:"right"}} to="/logout">
+            {props.isLoggedIn ? <Link onClick={handleLogout} style={{float:"right"}} to="/logout">
                 <p>Logout</p>
             </Link> : null}
 
-            {loggedIn ? null : <Link style={{float:"right"}} to="/login">
+            {props.isLoggedIn ? null : <Link style={{float:"right"}} to="/login">
                 <p>Login</p>
             </Link>}
+            <Link style={{float:"right"}} to="/signup">
+                <p>Signup</p>
+            </Link>
             
         </div>
     )

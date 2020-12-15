@@ -14,11 +14,10 @@ import {
   Link
 } from "react-router-dom";
 
-const Home = () => {
-
+const Home = (props) => {
     return (
         <div>
-            <SearchData />
+            <SearchData id={props?.user?.id}/>
         </div>
     )
 }

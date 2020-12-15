@@ -1,8 +1,13 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-from rest_framework.decorators import api_view
+from django.contrib.auth.models import User
+from rest_framework import permissions, status
+from rest_framework.views import APIView
+
+from django.http import JsonResponse, HttpResponseRedirect
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
-from .serializers import CommandSerializer, PostSerializer, FavoritesSerializer
+from .serializers import CommandSerializer, PostSerializer, FavoritesSerializer, UserSerializer, UserSerializerWithToken
 from .models import Commands, Post, Favorites, User
 
 #Commands
@@ -57,12 +62,21 @@ def post_create(request):
 
 #Favorites
 @api_view(['GET'])
+# @permission_classes([AllowAny])
+#@permission_classes([IsAuthenticated])
 def favorites_list(request):
-    favorites = Favorites.objects.all()
+    #filter by specific user logged in
+    favorites = Favorites.objects.filter(author=request.user)
+    print(request.user.id)
+    #favorites = Favorites.objects.all()
+    #favorite = favorites.first()
+    #print(request.user == favorite.author) 
     #many=true, if querying multiple items
     serializer = FavoritesSerializer(favorites, many=True)
     return Response(serializer.data)
 
+
+#@permission_classes([AllowAny])
 @api_view(['POST'])
 def favorites_create(request):
     serializer = FavoritesSerializer(data=request.data)
@@ -81,10 +95,12 @@ def favorites_update(request, pk):
         serializer.save()
     return Response(serializer.data)
 
+#@permission_classes([IsAuthenticated])
+# @permission_classes([AllowAny])
 @api_view(['DELETE'])
 def favorites_delete(request, pk):
     try:
-        delete_favorite = Favorites.objects.get(id=pk)
+        delete_favorite = Favorites.objects.get(id=pk, author=request.user)
         delete_favorite.delete()
     except:
         return Response('Could not find the object you were trying to delete.')
@@ -127,3 +143,30 @@ def favorites_delete(request, pk):
 #     except:
 #         return Response('Could not find the object you were trying to delete.')
 #     return Response('Item deleted successfully'
+
+
+#AUTH VIEWS
+@api_view(['GET'])
+def current_user(request):
+    """
+    Determine the current user by their token, and return their data
+    """
+    
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
+
+
+class UserList(APIView):
+    """
+    Create a new user. It's called 'UserList' because normally we'd have a get
+    method here too, for retrieving a list of all User objects.
+    """
+
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = UserSerializerWithToken(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

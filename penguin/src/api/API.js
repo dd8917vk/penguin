@@ -28,10 +28,41 @@ const getRandomQuote = async () => {
 //   const response = await fetch(`https://artii.herokuapp.com/make?text=linux+rules`)
 // }
 
-const getAllFavorites = async ()=>{
-    const response = await fetch('http://localhost:8000/api/favorites_list/'); //FOR LOCAL DEV
+const getAllFavorites = async (token)=>{
+    const response = await fetch('http://localhost:8000/api/favorites_list/',
+    {
+      headers: {
+        'Content-Type':'application/json',
+        'Authorization': `JWT ${token}`
+      },
+    }
+    ); //FOR LOCAL DEV
     const data = await response.json();
     return data;
+}
+//auth
+const login = async (userCredentials) => {
+  let response = await fetch('http://localhost:8000/token-auth/', 
+  {
+    method: 'POST',
+    headers: {
+      'Content-Type':'application/json'
+    },
+    body: JSON.stringify(userCredentials)
+  });
+  console.log(userCredentials);
+  return response;
+}
+
+const getLoggedInUser = async (token) => {
+  let response = await fetch('http://localhost:8000/api/current_user/', 
+  {
+    headers: {
+      'Content-Type':'application/json',
+      'Authorization': `JWT ${token}`
+    },
+  });
+  return response;
 }
 
 export {
@@ -40,4 +71,6 @@ export {
   getRandomQuote,
   getHtmlDataByCommand,
   getAllFavorites,
+  login,
+  getLoggedInUser,
 }

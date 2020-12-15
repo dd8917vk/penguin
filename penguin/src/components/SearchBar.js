@@ -6,6 +6,7 @@ import Stats from './Stats'
 import { atom, useRecoilState } from 'recoil'
 import { createHtmlDataState } from '../globalstate/atom'
 import Quote from './Quote'
+import styles from './SearchBar.module.css'
 
 const SearchBar = styled.input`
     display:block;
@@ -25,6 +26,7 @@ const SearchBar = styled.input`
 
 
 export default function SearchData(props) {
+
     const [data, setData] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -33,13 +35,15 @@ export default function SearchData(props) {
     //const [htmlData, setHtmlData] = useState([])
     //const [htmlData, setHtmlData] = useRecoilState(createHtmlDataState)
 
-    const handleSearch = (event) => {
-        setSearchText(event.target.value.toLowerCase()); 
+    const handleSearch = (event, text) => {
+        console.log(text);
+        // setSearchText(event.target.value.toLowerCase()); 
+        setSearchText(text.toLowerCase()); 
         // if (searchText !== ""){
-            setFilteredData(data.filter(item=>{
-                const command = item.command.toLowerCase();
-                return command.includes(searchText);
-            }).sort((a,b)=>a.command.length-b.command.length));
+        setFilteredData(data.filter(item=>{
+            const command = item.command.toLowerCase();
+            return command.includes(text);
+        }).sort((a,b)=>a.command.length-b.command.length));
         // }
     }
     useEffect(async ()=>{
@@ -58,11 +62,11 @@ export default function SearchData(props) {
       },[])
 
     return (
-    <div style={{marginTop:"50px"}}>
+    <div id="smaller" style={{marginTop:"50px"}}>
     <form className="inputPlain">
-        <SearchBar onChange={(event) => handleSearch(event)} placeholder={'->MY MAN LINNY<-'}/>
-        <Stats dataLength={filteredData.length}/>
-        <MasterTable rows={filteredData.slice(0,40)} searchText={searchText}/>
+        <SearchBar onChange={(event) => handleSearch(event, event.target.value)} placeholder={'->MY MAN LINNY<-'}/>
+        <Stats dataLength={searchText === '' ? 0 : filteredData.length}/>
+        <MasterTable id={props.id} rows={filteredData.slice(0,40)} searchText={searchText}/>
         <Quote searchText={searchText}/>
     </form>
     </div>

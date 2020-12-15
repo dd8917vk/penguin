@@ -6,6 +6,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const MasterTable = (props) => {
+
+	let token = localStorage.getItem('user');
+
 	const [favorite, setFavorite] = useState(false);
 
 	const ascify = (event) => {
@@ -26,7 +29,8 @@ const MasterTable = (props) => {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
-			'Content-Type': 'application/json'
+			'Content-Type': 'application/json',
+			'Authorization': `JWT ${token}`
 		},
 		body: JSON.stringify({command: command, description: description, comment: 'Click to enter comment', author: 2})
 		});

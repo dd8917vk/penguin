@@ -38,6 +38,9 @@ const CardTitle = styled.p`
 // const boardObject = { title: "Your Card", items: ["item1", "item2"] };
 
 export default function Comment(props) {
+
+    console.log(props.userId)
+    let token = localStorage.getItem('user');
     const text = props.text
     const [textContent, setTextContent] = useState(text);
     const [showTitle, setShowTitle] = useState(true);
@@ -78,9 +81,10 @@ export default function Comment(props) {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
-			'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `JWT ${token}`
 		},
-		body: JSON.stringify({command: command, description: description, comment: newText, author: 2})
+		body: JSON.stringify({command: command, description: description, comment: newText, author: props.userId})
 		});
 		const content = await rawResponse.json();
 		console.log(rawResponse);

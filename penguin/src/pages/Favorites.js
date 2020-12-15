@@ -3,10 +3,11 @@ import { Table, Container, Row } from "react-bootstrap";
 import FavoriteTable from '../components/FavoriteTable'
 
 const Favorites = (props) => {
-    let obj = props.location.state;
+    console.log(props)
+    let obj = props?.location?.state;
     return (
         <div>
-            <FavoriteTable props_obj={obj} />
+            <FavoriteTable id={props?.user?.id} props_obj={obj} />
         </div>
     )
 }

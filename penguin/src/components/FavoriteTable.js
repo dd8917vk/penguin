@@ -7,14 +7,17 @@ import Comment from '../components/Comment';
 
 
 const FavoriteTable = (props) => {
+    let token = localStorage.getItem('user');
+    console.log(props)
     //This is command and description in props obj
     //localStorage
     //const [favorites, setFavorites] = useState([]) 
     const [favorites, setFavorites] = useState([]);
     useEffect(()=>{
-        const data = async () => await getAllFavorites();
+        const data = async () => await getAllFavorites(token);
         let results = data().then(resp => {
             setFavorites(resp);
+            console.log(favorites)
         })
 
         //localStorage
@@ -40,7 +43,8 @@ const FavoriteTable = (props) => {
 		method: 'DELETE',
 		headers: {
 			'Accept': 'application/json',
-			'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${token}`
 		}});
 		const content = await rawResponse.json();
 		console.log(rawResponse);
@@ -74,7 +78,6 @@ const FavoriteTable = (props) => {
     //     setFavorites(oldItems)
     //     console.log(favorites)
     // }
-
     return (
         <div style={{marginTop:"80px"}}>
             <Table striped bordered hover variant="dark" size="sm">
@@ -87,12 +90,12 @@ const FavoriteTable = (props) => {
 					</tr>
 				</thead>
 					<tbody>
-                        {favorites.map((item, index)=>{
+                        {favorites.length > 0 ? favorites.map((item, index)=>{
                             return ( 
                             <tr key={index}>
                                 <td style={{maxWidth: "50px", wordWrap: "break-word"}}>{item.command}</td>
                                 <td style={{maxWidth: "30px", wordWrap: "break-word"}}>{item.description}</td>
-                                <td style={{maxWidth: "200px", wordWrap: "break-word", cursor:"pointer"}}><Comment id={item.id} cmd={item.command} desc={item.description} text={{title:item.comment}}/></td>
+                                <td style={{maxWidth: "200px", wordWrap: "break-word", cursor:"pointer"}}><Comment userId={props.id} id={item.id} cmd={item.command} desc={item.description} text={{title:item.comment}}/></td>
                                 {/* <td>{item.comment}</td> */}
                                 <td><button id={item.command} style={{color:"black"}} onClick={deleteFavorite}>remove</button></td>
                                 <ToastContainer
@@ -107,7 +110,7 @@ const FavoriteTable = (props) => {
 								pauseOnHover
 								></ToastContainer>
                             </tr>)
-                        })}
+                        }) : <div>You must login to view favorites.</div>}
                     </tbody>
 			</Table>
         </div>

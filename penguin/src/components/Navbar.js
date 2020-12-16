@@ -1,19 +1,18 @@
 import React, { useState, useParams } from 'react'
 import styles from './Navbar.module.css'
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, Redirect } from 'react-router-dom';
 import { atom, useRecoilState } from 'recoil'
 import { createHtmlDataState } from '../globalstate/atom';
 import logo from '../static/peng1.png';
 
 function Navbar(props) {
 
-    // let hist = useHistory()
     // if(!props.isLoggedIn){
     //     hist.push('/');
     // }
     // hist.push('/');
     const handleLogout = () =>{
-        console.log(props)
+        console.log(props);
         localStorage.removeItem('user');
         props.setIsLoggedIn(false);
         props.setUser(null);
@@ -39,7 +38,7 @@ function Navbar(props) {
                 <p>Feedback</p>
             </Link>
             <Link to="/" style={{float:"right"}}><p><img style={{width:"50px", margin:"auto auto"}}id="peng" src={logo}></img></p></Link>
-            {props.isLoggedIn ? <Link onClick={handleLogout} style={{float:"right"}} to="/logout">
+            {props.isLoggedIn ? <Link onClick={handleLogout} style={{float:"right"}} to="/">
                 <p>Logout</p>
             </Link> : null}
 

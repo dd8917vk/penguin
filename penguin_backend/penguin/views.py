@@ -12,6 +12,7 @@ from .models import Commands, Post, Favorites, User
 
 #Commands
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def command_overview(request):
     api_urls = {
         'List': '/command_list/',
@@ -30,6 +31,7 @@ def command_overview(request):
     return Response(api_urls)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def command_list(request):
     commands = Commands.objects.all()
     #many=true, if querying multiple items
@@ -37,6 +39,7 @@ def command_list(request):
     return Response(serializer.data)
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def command_view_by_name(request, command):
     command = Commands.objects.filter(command=command)
     if not command:
@@ -67,7 +70,6 @@ def post_create(request):
 def favorites_list(request):
     #filter by specific user logged in
     favorites = Favorites.objects.filter(author=request.user)
-    print(request.user.id)
     #favorites = Favorites.objects.all()
     #favorite = favorites.first()
     #print(request.user == favorite.author) 
@@ -80,6 +82,7 @@ def favorites_list(request):
 @api_view(['POST'])
 def favorites_create(request):
     serializer = FavoritesSerializer(data=request.data)
+    print(serializer)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)

@@ -110,7 +110,7 @@ const FavoriteTable = (props) => {
 								pauseOnHover
 								></ToastContainer>
                             </tr>)
-                        }) : <div>You must login to view favorites.</div>}
+                        }) : <div style={{textAlign:"center"}}>You must login to view favorites. If you're already logged in, add some favorites.</div>}
                     </tbody>
 			</Table>
         </div>

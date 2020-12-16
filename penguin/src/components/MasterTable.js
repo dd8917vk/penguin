@@ -6,7 +6,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const MasterTable = (props) => {
-
 	let token = localStorage.getItem('user');
 
 	const [favorite, setFavorite] = useState(false);
@@ -32,7 +31,7 @@ const MasterTable = (props) => {
 			'Content-Type': 'application/json',
 			'Authorization': `JWT ${token}`
 		},
-		body: JSON.stringify({command: command, description: description, comment: 'Click to enter comment', author: 2})
+		body: JSON.stringify({command: command, description: description, comment: 'Click to enter comment', author: props.id})
 		});
 		const content = await rawResponse.json();
 		console.log(rawResponse);

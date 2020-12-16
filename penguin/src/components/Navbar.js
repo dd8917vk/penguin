@@ -7,11 +7,11 @@ import logo from '../static/peng1.png';
 
 function Navbar(props) {
 
-    let hist = useHistory()
-    if(!props.isLoggedIn){
-        hist.push('/');
-    }
-    hist.push('/');
+    // let hist = useHistory()
+    // if(!props.isLoggedIn){
+    //     hist.push('/');
+    // }
+    // hist.push('/');
     const handleLogout = () =>{
         console.log(props)
         localStorage.removeItem('user');

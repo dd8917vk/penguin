@@ -1,5 +1,7 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from 'react';
+import styled from 'styled-components';
+import { signupUser } from '../api/API';
+import { Link, useHistory } from "react-router-dom";
 
 const Input = styled.input`
   padding: 0.5em;
@@ -31,14 +33,40 @@ const Button = styled.button`
   background-color:black;
 `
 const Signup = () => {
+
+  const hist = useHistory();
+
+  const handleSignup = async (event) => {
+    event.preventDefault();
+    let username = event.target.username.value;
+    let password1 = event.target.password1.value;
+    let password2 = event.target.password2.value;
+    let email = event.target.email.value;
+    if (password1 !== password2){
+      alert("Passwords do not match.")
+    } else {
+    let userCredentials = {
+      username: username,
+      password: password1,
+      email: email,
+    }
+    let response = await signupUser(userCredentials);
+    let data = await response.json();
+    console.log(data);
+    data ? hist.push('/login') : <div>Something went wrong with account creation</div>
+    }
+  }
+
     return (
         <div style={{paddingTop:"100px"}}>
-            <Input placeholder={"username"} type="text" />
-            <Input placeholder={"password"}  type="password" inputColor="whitesmoke" />
-            <Input placeholder={"password"}  type="passwordX2" inputColor="whitesmoke" />
-            <Input placeholder={"email"}  type="password" inputColor="whitesmoke" />
-            <Button>submit</Button>
+          <form onSubmit={handleSignup}>
+            <Input placeholder={"username"} type="text" name="username" />
+            <Input placeholder={"password"}  type="password" inputColor="whitesmoke" name="password1"/>
+            <Input placeholder={"password"}  type="password" inputColor="whitesmoke" name="password2"/>
+            <Input placeholder={"email"}  type="email" inputColor="whitesmoke" name="email"/>
+            <Button type="submit">submit</Button>
             <p style={{color:"whitesmoke"}}>EMAIL HEADED YOUR WAY</p>
+          </form>
         </div>
     )
 }

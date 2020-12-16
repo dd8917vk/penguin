@@ -41,8 +41,10 @@ export default function SearchData(props) {
         setSearchText(text.toLowerCase()); 
         // if (searchText !== ""){
         setFilteredData(data.filter(item=>{
+            //change item.description to item.command to search command instead
+            const description = item.description.toLowerCase();
             const command = item.command.toLowerCase();
-            return command.includes(text);
+            return command.includes(text)||description.includes(text);
         }).sort((a,b)=>a.command.length-b.command.length));
         // }
     }

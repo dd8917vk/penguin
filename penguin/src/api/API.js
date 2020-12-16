@@ -65,6 +65,16 @@ const getLoggedInUser = async (token) => {
   return response;
 }
 
+const signupUser = async (userCredentials) => {
+  let response = await fetch('http://localhost:8000/api/users/',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userCredentials)
+  })
+  return response;
+}
 export {
   getData,
   getHtmlData,
@@ -73,4 +83,5 @@ export {
   getAllFavorites,
   login,
   getLoggedInUser,
+  signupUser,
 }

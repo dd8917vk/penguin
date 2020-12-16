@@ -25,7 +25,6 @@ function Navbar(props) {
             {/* <Link to={{pathname:"https://www.kernel.org/doc/man-pages/"}}>
                 <p>Official</p>
             </Link> */}
-            <Link to={{ pathname: "https://www.kernel.org/doc/man-pages/" }} target="_blank"><p>Official</p></Link>
 
             {/* <a href="https://www.kernel.org/doc/man-pages/" target="_blank">Official</a> */}
             <Link to="/about">
@@ -35,7 +34,7 @@ function Navbar(props) {
                 <p>Favorites</p>
             </Link>
             <Link to="/feedback">
-                <p>Feedback</p>
+                <p>Tty</p>
             </Link>
             <Link to="/" style={{float:"right"}}><p><img style={{width:"50px", margin:"auto auto"}}id="peng" src={logo}></img></p></Link>
             {props.isLoggedIn ? <Link onClick={handleLogout} style={{float:"right"}} to="/">
